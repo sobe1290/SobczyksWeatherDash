@@ -1,0 +1,18 @@
+#fiveDayForecast {
+    display: flex;
+}
+
+/* #forecastCard {
+    
+} */
+#mainBox {
+    display: flex;
+}
+
+#leftBox {
+    max-width: 25%;
+}
+
+#rightBox {
+    max-width: 75%;
+}
