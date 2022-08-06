@@ -1,5 +1,4 @@
 var requestedCity = '';
-var webCity= '';
 
 $('#submitCityBtn').click(function(event) {
     event.preventDefault();
