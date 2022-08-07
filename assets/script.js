@@ -8,7 +8,7 @@ $('#submitCityBtn').click(function(event) {
 })
 
 function mainCityCall () {
-    fetch('http://api.openweathermap.org/data/2.5//weather?appid=f510236949173fad67a61182bbdd1a37&q='+requestedCity+'&include=uvi&units=imperial')
+    fetch('http://api.openweathermap.org/data/2.5//weather?appid=f510236949173fad67a61182bbdd1a37&q='+requestedCity+'&units=imperial')
         .then((response) => {
             return response.json();
     })
