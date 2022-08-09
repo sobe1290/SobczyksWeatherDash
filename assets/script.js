@@ -34,7 +34,7 @@ function mainCityCall () {
             const {lat} = myJson.coord;
             const {lon} = myJson.coord;
             
-            return fetch('https://api.openweathermap.org/data/3.0/onecall?lat='+ lat +'&lon='+ lon +'&exclude=hourly,daily&appid=3ba0433d68e21e81f2e4cb6134abf857');
+            return fetch('http://api.openweathermap.org/data/3.0/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly,daily');
             
             //waiting for API key to be activated before testing again
 
