@@ -1,9 +1,13 @@
 var requestedCity = '';
+var historyContainerEl = document.querySelector('#history-container')
 
 $('#submitCityBtn').click(function(event) {
     event.preventDefault();
     requestedCity = $('#cityInput').val();
     mainCityCall();
+    // var historyCity = document.createElement('a');
+    // historyCity.classList = 'list-item flex-row justify-space-between align-center';
+    // historyCity.setText('text',;
 
 })
 
@@ -27,10 +31,17 @@ function mainCityCall () {
             $('#currentWindSpeed').text(speed+"km/h");
             const {humidity} = myJson.main;
             $('#currentHumid').text(humidity+"%");
-
-
-
+            const {lat} = myJson.coord;
+            const {lon} = myJson.coord;
             
-});
+            return fetch('https://api.openweathermap.org/data/3.0/onecall?lat='+ lat +'&lon='+ lon +'&exclude=hourly,daily&appid=3ba0433d68e21e81f2e4cb6134abf857');
+            
+            //waiting for API key to be activated before testing again
+
+        })
+
+        .then(response2 => response2.json())
+        console.log(response2)
+
 };
 
