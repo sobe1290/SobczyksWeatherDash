@@ -40,7 +40,7 @@ function mainCityCall () {
 };
 
 function secondCityCall (lat, lon) {
-    fetch('http://api.openweathermap.org/data/2.5/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly')
+    fetch('http://api.openweathermap.org/data/2.5/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly&units=imperial')
         .then((response) => {
             return response.json();
         })
