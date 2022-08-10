@@ -34,14 +34,16 @@ function mainCityCall () {
             const {lat} = myJson.coord;
             const {lon} = myJson.coord;
             
-            return fetch('http://api.openweathermap.org/data/3.0/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly,daily');
+            return secondCityCall(lat, lon)
             
             //waiting for API key to be activated before testing again
 
         })
 
-        .then(response2 => response2.json())
-        console.log(response2)
-
 };
 
+function secondCityCall (lat, lon) {
+    fetch('http://api.openweathermap.org/data/2.5/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly,daily');
+    .then((response) => {
+        return response.json();
+}
