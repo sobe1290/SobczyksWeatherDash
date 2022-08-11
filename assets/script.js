@@ -1,13 +1,18 @@
 var requestedCity = '';
-var historyContainerEl = document.querySelector('#history-container')
+var historyContainerEl = document.querySelector('#history-container');
+$('#history-containger li:gt(7)').remove();
 
 $('#submitCityBtn').click(function(event) {
     event.preventDefault();
     requestedCity = $('#cityInput').val();
     mainCityCall();
-    // var historyCity = document.createElement('a');
-    // historyCity.classList = 'list-item flex-row justify-space-between align-center';
-    // historyCity.setText('text',;
+    var historyCity = document.createElement('li');
+    historyCity.textContent = $('#cityInput').val();
+    historyContainerEl.appendChild(historyCity);
+    if (historyContainerEl.children.length >= 10) {
+        historyContainerEl.removeChild(historyContainerEl.firstElementChild);
+      };
+    
     
 
 });
