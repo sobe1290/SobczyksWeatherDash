@@ -1,21 +1,21 @@
+//Global Variables and a function to run on load to load past history if refreshed
 var requestedCity = '';
 let history = [];
 var historyContainerEl = document.querySelector('#history-container');
 loadHistory();
 
 
-
+//On click for the submit button to start the api calls
 $('#submitCityBtn').click(function(event) {
     event.preventDefault();
     requestedCity = $('#cityInput').val();
     mainCityCall();
     history.push(requestedCity);
-    console.log(history);
     localStorage.setItem("Searched Cities", JSON.stringify(history));
     getSearchedCities();
-
 });
 
+//Function for the current weather API call
 function mainCityCall () {
     fetch('http://api.openweathermap.org/data/2.5//weather?appid=f510236949173fad67a61182bbdd1a37&q='+requestedCity+'&units=imperial')
         .then((response) => {
@@ -43,6 +43,7 @@ function mainCityCall () {
         });
 };
 
+//Function for the UV and 5 day forecast API call
 function secondCityCall (lat, lon) {
     fetch('http://api.openweathermap.org/data/2.5/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly,minutely&units=imperial')
         .then((response) => {
@@ -50,6 +51,7 @@ function secondCityCall (lat, lon) {
         })
         .then(function (secondJson) { 
             const {uvi} = secondJson.current;
+            //Changes the UV color by severity
             $('#currentUV').text(uvi);
             if (~~($('#currentUV').text()) < 2) {
                 $('#currentUV').attr('class','ms-1 favorableUV')
@@ -61,20 +63,21 @@ function secondCityCall (lat, lon) {
                 $('#currentUV').attr('class','ms-1 severeUV')
             };
 
+            //Next 5 functions for the forecast
             (function() {
-            const {dt} = secondJson.daily[1];
-            const {timezone_offset} = secondJson;
-            const {icon} = secondJson.daily[1].weather[0];
-            const {day} = secondJson.daily[1].temp;
-            const {wind_speed} = secondJson.daily[1];
-            const {humidity} = secondJson.daily[1];
-            var adjustedTime = timezone_offset / 60; 
-            var forecastday1 = moment.unix(dt).utc().utcOffset(adjustedTime).format('MM/DD/YYYY');
-            $('#forecastDay1').text(forecastday1);
-            $('#weatherIconDay1').attr("src",'http://openweathermap.org/img/wn/'+ icon +'.png');
-            $("#day1Temp").text("Temp: "+ day + "°F");
-            $('#day1WindSpeed').text("Wind Speed: "+ wind_speed +" MPH"); 
-            $('#day1Humid').text("Humidity: "+ humidity +"%");
+                const {dt} = secondJson.daily[1];
+                const {timezone_offset} = secondJson;
+                const {icon} = secondJson.daily[1].weather[0];
+                const {day} = secondJson.daily[1].temp;
+                const {wind_speed} = secondJson.daily[1];
+                const {humidity} = secondJson.daily[1];
+                var adjustedTime = timezone_offset / 60; 
+                var forecastday1 = moment.unix(dt).utc().utcOffset(adjustedTime).format('MM/DD/YYYY');
+                $('#forecastDay1').text(forecastday1);
+                $('#weatherIconDay1').attr("src",'http://openweathermap.org/img/wn/'+ icon +'.png');
+                $("#day1Temp").text("Temp: "+ day + "°F");
+                $('#day1WindSpeed').text("Wind Speed: "+ wind_speed +" MPH"); 
+                $('#day1Humid').text("Humidity: "+ humidity +"%");
             })();
 
             (function() {
@@ -140,42 +143,36 @@ function secondCityCall (lat, lon) {
                 $('#day5WindSpeed').text("Wind Speed: "+ wind_speed +" MPH");
                 $('#day5Humid').text("Humidity: "+ humidity +"%");
                 })();
-
-        });      
-
+        });     
 };
 
+//Function to retrive the saved cities from local storage and place them onto page
 function getSearchedCities() {
     var savedCities = localStorage.getItem('Searched Cities');
     if (savedCities) {
       savedCities = JSON.parse(savedCities);
     }
     historyContainerEl.innerHTML = '';
-
     for (var i = savedCities.length - 1; i >= 0; i--) {
         var btn = document.createElement('button');
         btn.setAttribute('type', 'button');        
         btn.textContent = savedCities[i];
         btn.setAttribute('data-search', savedCities[i]);
-        historyContainerEl.append(btn);
-    
+        historyContainerEl.append(btn);    
   };
 };
 
 historyContainerEl.addEventListener('click', buttonCityCall);
 
-function buttonCityCall(event) {
-   
+//Function to pull button name from search history and use it for the next API calls
+function buttonCityCall(event) {   
     var btn = event.target;
     var btnName = btn.getAttribute('data-search');
     mainHistoryCityCall(btnName);
     secondHistoryCityCall;
-
-   
-
   };
   
-
+//Function to update main weather card from history
 function mainHistoryCityCall (btnName) {
     fetch('http://api.openweathermap.org/data/2.5//weather?appid=f510236949173fad67a61182bbdd1a37&q='+ btnName +'&units=imperial')
         .then((response) => {
@@ -203,6 +200,7 @@ function mainHistoryCityCall (btnName) {
         });
 };
 
+//Function to generate forecast from history
 function secondHistoryCityCall (lat, lon) {
     fetch('http://api.openweathermap.org/data/2.5/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly,minutely&units=imperial')
         .then((response) => {
@@ -222,19 +220,19 @@ function secondHistoryCityCall (lat, lon) {
             };
 
             (function() {
-            const {dt} = secondJson.daily[1];
-            const {timezone_offset} = secondJson;
-            const {icon} = secondJson.daily[1].weather[0];
-            const {day} = secondJson.daily[1].temp;
-            const {wind_speed} = secondJson.daily[1];
-            const {humidity} = secondJson.daily[1];
-            var adjustedTime = timezone_offset / 60; 
-            var forecastday1 = moment.unix(dt).utc().utcOffset(adjustedTime).format('MM/DD/YYYY');
-            $('#forecastDay1').text(forecastday1);
-            $('#weatherIconDay1').attr("src",'http://openweathermap.org/img/wn/'+ icon +'.png');
-            $("#day1Temp").text("Temp: "+ day + "°F");
-            $('#day1WindSpeed').text("Wind Speed: "+ wind_speed +" MPH"); 
-            $('#day1Humid').text("Humidity: "+ humidity +"%");
+                const {dt} = secondJson.daily[1];
+                const {timezone_offset} = secondJson;
+                const {icon} = secondJson.daily[1].weather[0];
+                const {day} = secondJson.daily[1].temp;
+                const {wind_speed} = secondJson.daily[1];
+                const {humidity} = secondJson.daily[1];
+                var adjustedTime = timezone_offset / 60; 
+                var forecastday1 = moment.unix(dt).utc().utcOffset(adjustedTime).format('MM/DD/YYYY');
+                $('#forecastDay1').text(forecastday1);
+                $('#weatherIconDay1').attr("src",'http://openweathermap.org/img/wn/'+ icon +'.png');
+                $("#day1Temp").text("Temp: "+ day + "°F");
+                $('#day1WindSpeed').text("Wind Speed: "+ wind_speed +" MPH"); 
+                $('#day1Humid').text("Humidity: "+ humidity +"%");
             })();
 
             (function() {
@@ -300,24 +298,21 @@ function secondHistoryCityCall (lat, lon) {
                 $('#day5WindSpeed').text("Wind Speed: "+ wind_speed +" MPH");
                 $('#day5Humid').text("Humidity: "+ humidity +"%");
                 })();
-
         });      
-
 };
 
+//Function that loads history from local storage on page reload
 function loadHistory () {
     var savedCities = localStorage.getItem('Searched Cities');
     if (savedCities) {
-      savedCities = JSON.parse(savedCities);
-      historyContainerEl.innerHTML = '';
-
+        savedCities = JSON.parse(savedCities);
+        historyContainerEl.innerHTML = '';
     for (var i = savedCities.length - 1; i >= 0; i--) {
         var btn = document.createElement('button');
         btn.setAttribute('type', 'button');        
         btn.textContent = savedCities[i];
         btn.setAttribute('data-search', savedCities[i]);
         historyContainerEl.append(btn);
-
     }
     } else return;
 };

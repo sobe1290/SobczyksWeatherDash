@@ -1,3 +1,4 @@
+/* Styles for some of the page elements */
 #fiveDayForecast {
     display: flex;
 }
@@ -14,6 +15,7 @@
     max-width: 75%;
 }
 
+/* Styles for the changes in the UV text */
 .favorableUV {
     background-color: green;
     color: white;
