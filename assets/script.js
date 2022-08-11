@@ -17,7 +17,7 @@ $('#submitCityBtn').click(function(event) {
 
 //Function for the current weather API call
 function mainCityCall () {
-    fetch('http://api.openweathermap.org/data/2.5//weather?appid=f510236949173fad67a61182bbdd1a37&q='+requestedCity+'&units=imperial')
+    fetch('https://api.openweathermap.org/data/2.5//weather?appid=f510236949173fad67a61182bbdd1a37&q='+requestedCity+'&units=imperial')
         .then((response) => {
             return response.json();
         })
@@ -45,7 +45,7 @@ function mainCityCall () {
 
 //Function for the UV and 5 day forecast API call
 function secondCityCall (lat, lon) {
-    fetch('http://api.openweathermap.org/data/2.5/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly,minutely&units=imperial')
+    fetch('https://api.openweathermap.org/data/2.5/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly,minutely&units=imperial')
         .then((response) => {
             return response.json();
         })
@@ -174,7 +174,7 @@ function buttonCityCall(event) {
   
 //Function to update main weather card from history
 function mainHistoryCityCall (btnName) {
-    fetch('http://api.openweathermap.org/data/2.5//weather?appid=f510236949173fad67a61182bbdd1a37&q='+ btnName +'&units=imperial')
+    fetch('https://api.openweathermap.org/data/2.5//weather?appid=f510236949173fad67a61182bbdd1a37&q='+ btnName +'&units=imperial')
         .then((response) => {
             return response.json();
         })
@@ -202,7 +202,7 @@ function mainHistoryCityCall (btnName) {
 
 //Function to generate forecast from history
 function secondHistoryCityCall (lat, lon) {
-    fetch('http://api.openweathermap.org/data/2.5/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly,minutely&units=imperial')
+    fetch('https://api.openweathermap.org/data/2.5/onecall?appid=f510236949173fad67a61182bbdd1a37&lat='+ lat +'&lon='+ lon +'&exclude=hourly,minutely&units=imperial')
         .then((response) => {
             return response.json();
         })
