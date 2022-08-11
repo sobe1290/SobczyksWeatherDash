@@ -16,3 +16,17 @@
 #rightBox {
     max-width: 75%;
 }
+
+.favorableUV {
+    background-color: green;
+    color: white;
+}
+
+.moderateUV {
+    background-color: yellow;
+    color: black;
+}
+.severeUV {
+    background-color: red;
+    color: white;
+}
