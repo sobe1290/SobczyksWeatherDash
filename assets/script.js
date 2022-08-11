@@ -51,7 +51,6 @@ function secondCityCall (lat, lon) {
             console.log(secondJson); 
             const {uvi} = secondJson.current;
             $('#currentUV').text(uvi);
-            console.log(~~$('#currentUV').text());
             if (~~($('#currentUV').text()) < 2) {
                 $('#currentUV').attr('class','ms-1 favorableUV')
             } 
@@ -65,41 +64,51 @@ function secondCityCall (lat, lon) {
             (function() {
             const {dt} = secondJson.daily[0];
             const {timezone_offset} = secondJson;
+            const {icon} = secondJson.daily[0].weather[0]
             var adjustedTime = timezone_offset / 60; 
             var forecastday1 = moment.unix(dt).utc().utcOffset(adjustedTime).format('MM/DD/YYYY');
             $('#forecastDay1').text(forecastday1);
+            $('#weatherIconDay1').attr("src",'http://openweathermap.org/img/wn/'+ icon +'.png')
             })();
 
             (function() {
                 const {dt} = secondJson.daily[1];
                 const {timezone_offset} = secondJson;
+                const {icon} = secondJson.daily[1].weather[0]
                 var adjustedTime = timezone_offset / 60; 
                 var forecastday2 = moment.unix(dt).utc().utcOffset(adjustedTime).format('MM/DD/YYYY');
                 $('#forecastDay2').text(forecastday2);
+                $('#weatherIconDay2').attr("src",'http://openweathermap.org/img/wn/'+ icon +'.png')
                 })();
 
             (function() {
                 const {dt} = secondJson.daily[2];
                 const {timezone_offset} = secondJson;
+                const {icon} = secondJson.daily[2].weather[0]
                 var adjustedTime = timezone_offset / 60; 
                 var forecastday3 = moment.unix(dt).utc().utcOffset(adjustedTime).format('MM/DD/YYYY');
                 $('#forecastDay3').text(forecastday3);
+                $('#weatherIconDay3').attr("src",'http://openweathermap.org/img/wn/'+ icon +'.png')
                 })();
 
             (function() {
                 const {dt} = secondJson.daily[3];
                 const {timezone_offset} = secondJson;
+                const {icon} = secondJson.daily[3].weather[0]
                 var adjustedTime = timezone_offset / 60; 
                 var forecastday4 = moment.unix(dt).utc().utcOffset(adjustedTime).format('MM/DD/YYYY');
                 $('#forecastDay4').text(forecastday4);
+                $('#weatherIconDay4').attr("src",'http://openweathermap.org/img/wn/'+ icon +'.png')
                 })();
 
             (function() {
                 const {dt} = secondJson.daily[4];
                 const {timezone_offset} = secondJson;
+                const {icon} = secondJson.daily[4].weather[0]
                 var adjustedTime = timezone_offset / 60; 
                 var forecastday5 = moment.unix(dt).utc().utcOffset(adjustedTime).format('MM/DD/YYYY');
                 $('#forecastDay5').text(forecastday5);
+                $('#weatherIconDay5').attr("src",'http://openweathermap.org/img/wn/'+ icon +'.png')
                 })();
 
         });      
